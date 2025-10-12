@@ -1,7 +1,7 @@
-const { JWT_SECRET } = require('./db')
+const { JWT_SECRET } = require('./config')
 const jwt = require('jsonwebtoken')
 const authMiddleware = (req, res, next) => {
-    const authHeader = req.header.authorization;
+    const authHeader = req.headers.authorization;
     
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
         return res.status(403).json({})
@@ -19,7 +19,7 @@ const authMiddleware = (req, res, next) => {
             return res.status(403).json({})
         }
     } catch(err) {
-        return res.status(403).json({})
+        return res.status(404).json({})
     }
 }
 
