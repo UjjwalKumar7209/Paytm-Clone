@@ -1,14 +1,29 @@
-import Heading from "../components/Heading";
-import Appbar from "../components/Appbar";
-import { Users } from "../components/Users";
+import Appbar from '../components/Appbar'
+import { Users } from '../components/Users'
+import Balance from '../components/Balance'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 export default function Dashboard() {
-    return (
-        <div>
-            <Appbar />
-            <div className="m-8">
-                <Users />
-            </div>
-        </div>
-    )
+  const [value, setValue] = useState()
+  useEffect(() =>{
+    axios.get(
+      'http://localhost:3000/api/v1/account/balance',{
+        headers: {
+          Authorization: 'Bearer ' + localStorage.getItem('token')
+        }
+      }
+    ).then((res) => {
+        setValue(res.data.balance)
+    })
+  }, [])
+  return (
+    <div>
+      <Appbar />
+      <Balance value={value} />
+      <div className="m-8">
+        <Users />
+      </div>
+    </div>
+  )
 }
