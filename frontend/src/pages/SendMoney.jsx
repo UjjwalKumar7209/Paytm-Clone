@@ -1,7 +1,8 @@
-import { useSearchParams } from 'react-router-dom'
+import { useSearchParams, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { useState } from 'react'
 export default function SendMoney() {
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams()
   const [amount, setAmount] = useState(0)
   const id = searchParams.get('id')
@@ -40,19 +41,24 @@ export default function SendMoney() {
                 />
               </div>
               <button
-                onClick={() => {
-                  axios.post(
-                    'http://localhost:3000/api/v1/account/transfer',
-                    {
-                      to: id,
-                      amount
-                    },
-                    {
-                      headers: {
-                        Authorization: 'Bearer ' + localStorage.getItem('token')
+                onClick={async () => {
+                  try {
+                    await axios.post(
+                      'http://localhost:3000/api/v1/account/transfer',
+                      {
+                        to: id,
+                        amount
+                      },
+                      {
+                        headers: {
+                          Authorization: 'Bearer ' + localStorage.getItem('token')
+                        }
                       }
-                    }
-                  )
+                    );
+                    navigate('/dashboard');
+                  } catch (err) {
+                    console.error('Transfer failed:', err);
+                  }
                 }}
                 class="justify-center rounded-md text-sm font-medium ring-offset-background transition-colors h-10 px-4 py-2 w-full bg-green-500 text-white"
               >

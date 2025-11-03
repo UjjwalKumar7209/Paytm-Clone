@@ -1,0 +1,17 @@
+import { Navigate } from 'react-router-dom';
+
+export function ProtectedRoute({ children }) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        return <Navigate to="/signin" />;
+    }
+    return children;
+}
+
+export function AnonymousRoute({ children }) {
+    const token = localStorage.getItem('token');
+    if (token) {
+        return <Navigate to="/dashboard" />;
+    }
+    return children;
+}
