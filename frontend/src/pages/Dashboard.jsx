@@ -8,7 +8,7 @@ export default function Dashboard() {
   const [value, setValue] = useState()
   useEffect(() =>{
     axios.get(
-      'http://localhost:3000/api/v1/account/balance',{
+      `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/v1/account/balance`, {
         headers: {
           Authorization: 'Bearer ' + localStorage.getItem('token')
         }

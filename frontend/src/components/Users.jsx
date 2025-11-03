@@ -13,7 +13,7 @@ export const Users = () => {
     const [filter, setFilter] = useState("")
     // Add debouncing later
     useEffect(() =>{
-        axios.get("http://localhost:3000/api/v1/user/bulk?filter=" + filter)
+        axios.get(`${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/v1/user/bulk?filter=${encodeURIComponent(filter)}`)
             .then((response) => {
                 setUsers(response.data.user)
             })

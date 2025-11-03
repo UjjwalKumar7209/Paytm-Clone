@@ -44,7 +44,7 @@ export default function SendMoney() {
                 onClick={async () => {
                   try {
                     await axios.post(
-                      'http://localhost:3000/api/v1/account/transfer',
+                      `${import.meta.env.VITE_REACT_APP_BACKEND_BASEURL}/api/v1/account/transfer`,
                       {
                         to: id,
                         amount
